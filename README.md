@@ -1,4 +1,16 @@
 # Sunrise-Valley
-This is my second project in Unity
+CPSC 386 Assignment 2/3
 
-Features three levels with music although the save and load system is broken.
+### Built With
+* [![Unity][Unity.com]][Unity-url]
+
+### Installation
+1. Download the ZIP file
+2. Extract the ZIP file
+3. Open the windowsbuild folder
+4. Open the assignment2.exe
+
+<!--Markdown Links And Images -->
+[Unity.com]: https://upload.wikimedia.org/wikipedia/commons/1/19/Unity_Logo.png
+[Unity-url]: https://unity.com/
+
