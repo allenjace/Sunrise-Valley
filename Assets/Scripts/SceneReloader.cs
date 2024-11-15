@@ -8,6 +8,13 @@ public class SceneReloader : MonoBehaviour
     // Store the previous scene's build index
     public static int previousSceneIndex;
 
+    public void RestartCurrentScene()
+    {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
+        Time.timeScale = 1f;
+    }
+
     // Call this method before loading the Game Over screen
     public static void SetPreviousScene()
     {
@@ -19,7 +26,7 @@ public class SceneReloader : MonoBehaviour
     public void RestartPreviousScene()
     {
         // Check if the previous scene is set to the correct level index range
-        if (previousSceneIndex >= 6 && previousSceneIndex <= 8)
+        if (previousSceneIndex >= 7 && previousSceneIndex <= 11)
         {
             SceneManager.LoadScene(previousSceneIndex);  // Restart the previous level
             Time.timeScale = 1f;

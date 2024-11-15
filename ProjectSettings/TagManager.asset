@@ -9,6 +9,7 @@ TagManager:
   - VictoryPlatform
   - Enemy
   - Trap
+  - ExtraLife
   layers:
   - Default
   - TransparentFX

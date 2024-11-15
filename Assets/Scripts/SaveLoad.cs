@@ -1,84 +1,105 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class SaveLoad : MonoBehaviour
+public class LevelProgressManager : MonoBehaviour
 {
     public Button[] levelButtons;
-    public Slider volumeSlider;
-    public int currentLevelIndex = 6;
-    public void SaveLevelCompletion(int levelIndex)
-    {      
-        PlayerPrefs.SetInt("Level_" + levelIndex, 1); // 1 means completed
-        PlayerPrefs.Save(); // This ensures the data is written immediately
-    }
-    public bool IsLevelCompleted(int levelIndex)
+
+    private void Start()
     {
-        return PlayerPrefs.GetInt("Level_" + levelIndex, 0) == 1; // 0 means not completed
+        // Check if we're in the level select screen
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            Debug.Log("Updating button colors..."); 
+            UpdateLevelButtonColors();
+        }
     }
 
-    public void SaveProgress()
+    public void CompleteLevel(int levelIndex)
     {
-        SaveLevelCompletion(currentLevelIndex);
-        if (volumeSlider != null)
-        {
-            PlayerPrefs.SetFloat("Volume", volumeSlider.value); // Save the current volume value
-            PlayerPrefs.Save();
-        }
+        Debug.Log($"Completing level {levelIndex}"); 
+        // We don't need to set PlayerPrefs here as it's already set in LevelCompleteTrigger
+        SceneManager.LoadScene(10); // Victory screen
     }
-    public void LoadProgress()
+
+    private void UpdateLevelButtonColors()
     {
-        UpdateLevelButtons();
-        if (volumeSlider != null && PlayerPrefs.HasKey("Volume"))
+        if (levelButtons == null || levelButtons.Length == 0)
         {
-            float savedVolume = PlayerPrefs.GetFloat("Volume");
-            volumeSlider.value = savedVolume; // Set the slider to the saved volume value
-        }
-    }
-    public void UpdateLevelButtons()
-    {
-        // Ensure that the number of buttons corresponds to the number of levels (3 in this case)
-        if (levelButtons.Length != 3)
-        {
+            Debug.LogError("Level buttons array is empty or null!");
             return;
         }
 
-        // Loop through the levels (6 to 8, inclusive)
-        for (int i = 6; i <= 8; i++) 
+        int lastCompletedLevel = PlayerPrefs.GetInt("LastCompletedLevel", 0);
+        Debug.Log($"Last completed level: {lastCompletedLevel}");
+
+        // Level indices are 1, 2, 3, 4
+        for (int i = 0; i < levelButtons.Length; i++)
         {
-            bool isCompleted = IsLevelCompleted(i);
-
-            // i - 6 maps level index (6, 7, 8) to array index (0, 1, 2)
-            int buttonIndex = i - 6;
-
-            if (buttonIndex >= 0 && buttonIndex < levelButtons.Length)
+            if (levelButtons[i] == null)
             {
-                if (i == 6) // First level is always interactable
+                Debug.LogError($"Button at index {i} is null!");
+                continue;
+            }
+
+            int levelIndex = i + 1; // Convert button index to level index
+            bool isCompleted = IsLevelCompleted(levelIndex, lastCompletedLevel);
+            Debug.Log($"Level {levelIndex} completion status: {isCompleted}");
+
+            if (isCompleted)
+            {
+                ColorBlock colors = levelButtons[i].colors;
+                Color greenColor = new Color(0, 1, 0, 1); // Bright green
+                
+                colors.normalColor = greenColor;
+                colors.highlightedColor = new Color(0, 0.8f, 0, 1);
+                colors.pressedColor = new Color(0, 0.6f, 0, 1);
+                colors.selectedColor = new Color(0, 0.8f, 0, 1);
+                colors.disabledColor = new Color(0, 0.6f, 0, 0.5f);
+                
+                levelButtons[i].colors = colors;
+
+                Image buttonImage = levelButtons[i].GetComponent<Image>();
+                if (buttonImage != null)
                 {
-                    levelButtons[buttonIndex].interactable = true;
-                }
-                else
-                {
-                    // Enable the button only if the previous level is completed
-                    levelButtons[buttonIndex].interactable = isCompleted;
+                    buttonImage.color = greenColor;
                 }
             }
         }
     }
 
-    void Awake()
+    private bool IsLevelCompleted(int levelIndex, int lastCompletedLevel)
     {
-        DontDestroyOnLoad(gameObject);
+        // A level is completed if its index is less than or equal to the last completed level
+        bool isCompleted = levelIndex <= lastCompletedLevel;
+        Debug.Log($"Checking level {levelIndex} completion: {isCompleted}"); 
+        return isCompleted;
     }
-    private void Start()
+
+    public void LoadLevel(int levelIndex)
     {
-        UpdateLevelButtons(); // Update the button states when the scene starts
-        if (volumeSlider != null && PlayerPrefs.HasKey("Volume"))
+        SceneManager.LoadScene(levelIndex);
+    }
+
+    public void LoadLevelSelect()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void DebugPrintProgress()
+    {
+        int lastCompletedLevel = PlayerPrefs.GetInt("LastCompletedLevel", 0);
+        Debug.Log($"Last Completed Level: {lastCompletedLevel}");
+        
+        for (int i = 2; i <= 5; i++)
         {
-            float savedVolume = PlayerPrefs.GetFloat("Volume");
-            volumeSlider.value = savedVolume;
-        }   
+            Debug.Log($"Level {i} status: {(i <= lastCompletedLevel ? "Completed" : "Not Completed")}");
+        }
     }
 }

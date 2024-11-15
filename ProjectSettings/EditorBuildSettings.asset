@@ -9,27 +9,33 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
+    path: Assets/Scenes/LevelMenu.unity
+    guid: 98936a49b933a40e7bef45c200a4edcf
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: caf50854002674514bc88d605f0320ba
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: c3fa808ea37f6458691d0ed493217747
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: 92d62e357789e4de6acfc6246eea9bdf
+  - enabled: 1
+    path: Assets/Scenes/Level4.unity
+    guid: 3c19fd39d5f5549808cdb92e50921517
+  - enabled: 1
     path: Assets/Scenes/PauseMenu.unity
     guid: f5fa68596a133471aa38c908267fd361
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: d05c4e4203ea242a98297be3881cd343
   - enabled: 1
+    path: Assets/Scenes/Controls.unity
+    guid: ff143219e2ea446c5bd3e58d6e181225
+  - enabled: 1
     path: Assets/Scenes/Settings.unity
     guid: 1598da730a61c4dc89d93d2ddfdf4beb
   - enabled: 1
-    path: Assets/Scenes/LevelMenu.unity
-    guid: 98936a49b933a40e7bef45c200a4edcf
-  - enabled: 1
     path: Assets/Scenes/Victory.unity
     guid: 7cd0aeda7dad940b297fb16860859616
-  - enabled: 1
-    path: Assets/Scenes/LevelOne.unity
-    guid: caf50854002674514bc88d605f0320ba
-  - enabled: 1
-    path: Assets/Scenes/LevelTwo.unity
-    guid: c3fa808ea37f6458691d0ed493217747
-  - enabled: 1
-    path: Assets/Scenes/LevelThree.unity
-    guid: 92d62e357789e4de6acfc6246eea9bdf
   m_configObjects: {}

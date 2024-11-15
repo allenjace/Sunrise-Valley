@@ -1,29 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class VictoryScript : MonoBehaviour
 {
-    public static int sceneIndex;
+    private static int sceneIndex;
+
+    private void Start()
+    {
+        GetNextScene();
+    }
 
     public static void GetNextScene()
     {
-        // Store the current active scene's build index
-        sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        sceneIndex = PlayerPrefs.GetInt("LastCompletedLevel", 0);
+        Debug.Log($"Getting next scene. Last completed level index: {sceneIndex}");
+        
+        if (sceneIndex >= 2 && sceneIndex <= 5)
+        {
+            FindObjectOfType<LevelProgressManager>().CompleteLevel(sceneIndex);
+        }
     }
+
     public void NextLevel()
     {
+        Debug.Log($"Current scene index: {sceneIndex}");
         int nextSceneIndex = sceneIndex + 1;
-        // Check if the current scene is within the custom range
-        if (sceneIndex >= 6 && sceneIndex < 8)
+        
+        if (sceneIndex >= 2 && sceneIndex < 5)
         {
-            // Load the next level in the custom range
-            SceneManager.LoadSceneAsync(nextSceneIndex);
+            SceneManager.LoadScene(nextSceneIndex);
         }
-        else if (sceneIndex == 8)
+        else if (sceneIndex == 5)
         {
-            SceneManager.LoadSceneAsync("MainMenu");
+            SceneManager.LoadScene(0); // Main menu
         }
     }
 }
