@@ -2,7 +2,7 @@
 CPSC 386 Assignment 2/3
 
 ### Built With
-* [![Unity][Unity.com]][Unity-url]
+* [Unity][Unity-url]
 
 ### Installation
 1. Download the ZIP file
@@ -14,6 +14,5 @@ CPSC 386 Assignment 2/3
 Currently the build has a partially working restart button and the level design has some problems
 
 <!--Markdown Links And Images -->
-[Unity.com]: https://upload.wikimedia.org/wikipedia/commons/1/19/Unity_Logo.png
 [Unity-url]: https://unity.com/
 
